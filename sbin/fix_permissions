@@ -71,6 +71,7 @@ SIMULATE=0
 SYSREMOUNT=0
 SYSMOUNT=0
 DATAMOUNT=0
+DATADATAMOUNT=0
 SYSSDMOUNT=0
 FP_STARTTIME=$( $DATE +"%m-%d-%Y %H:%M:%S" )
 FP_STARTEPOCH=$( $DATE +%s )
@@ -192,6 +193,11 @@ fp_start()
       if $TEST $( $GREP -c " /data " "/proc/mounts" ) -eq 0; then
          $MOUNT /data > /dev/null 2>&1
          DATAMOUNT=1
+      fi
+
+      if $TEST $( $GREP -c " /datadata " "/proc/mounts" ) -eq 0; then
+         $MOUNT /datadata > /dev/null 2>&1
+         DATADATAMOUNT=1
       fi
       
       if $TEST -e /dev/block/mmcblk0p2 && $TEST $( $GREP -c " $SD_EXT_DIRECTORY " "/proc/mounts" ) -eq 0; then
